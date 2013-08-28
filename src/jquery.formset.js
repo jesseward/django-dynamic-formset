@@ -27,10 +27,13 @@
             },
 
             updateElementIndex = function(elem, prefix, ndx) {
+                var chosenRegex = new RegExp('(' + prefix + '_\\d+_)'),
+                    chosenReplacement = prefix + '_' + ndx + '_';
                 var idRegex = new RegExp(prefix + '-(\\d+|__prefix__)-'),
                     replacement = prefix + '-' + ndx + '-';
                 if (elem.attr("for")) elem.attr("for", elem.attr("for").replace(idRegex, replacement));
                 if (elem.attr('id')) elem.attr('id', elem.attr('id').replace(idRegex, replacement));
+                if (elem.attr('id')) elem.attr('id', elem.attr('id').replace(chosenRegex, chosenReplacement));
                 if (elem.attr('name')) elem.attr('name', elem.attr('name').replace(idRegex, replacement));
             },
 
@@ -115,10 +118,8 @@
             }
             if (hasChildElements(row)) {
                 row.addClass(options.formCssClass);
-                if (row.is(':visible')) {
-                    insertDeleteLink(row);
-                    applyExtraClasses(row, i);
-                }
+                insertDeleteLink(row);
+                applyExtraClasses(row, i);
             }
         });
 
